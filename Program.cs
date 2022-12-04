@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Security.Cryptography;
 
@@ -10,16 +10,7 @@ namespace RAMDecrypt
 
         static void Main(string[] args)
         {
-            if (args.Length < 1)
-            {
-                Console.WriteLine("Drag your AccountData.json file into the application to decrypt/encrypt it.");
-                Console.ReadKey();
-                return;
-            }
-        
             string AccountsPath = args[0];
-
-            Console.WriteLine("WARNING: Do NOT send any of these files to anyone as they can use the information stored in these files to steal your accounts, Robux, or even get your accounts termiated from Roblox!\n");
 
             if (File.Exists(AccountsPath))
             {
@@ -27,11 +18,7 @@ namespace RAMDecrypt
                 bool Decrypt = FB[0] + FB[1] + FB[2] == 1;
 
                 File.WriteAllBytes(AccountsPath, Decrypt ? ProtectedData.Unprotect(FB, Entropy, DataProtectionScope.CurrentUser) : ProtectedData.Protect(FB, Entropy, DataProtectionScope.CurrentUser));
-
-                Console.WriteLine(Decrypt ? "Decrypted your account data!": "Encrypted your account data!");
             }
-
-            Console.ReadKey();
         }
     }
 }
